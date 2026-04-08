@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Experience - CSEA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+<div th:replace="~{base :: navbar}"></div>
+<main class="container mx-auto px-6 py-12 max-w-2xl">
+    <div class="text-center mb-10">
+        <h1 class="text-4xl font-extrabold text-gray-800">Share your experience</h1>
+    </div>
+    <div th:if="${param.error}" class="bg-red-100 text-red-700 p-4 rounded mb-6 text-center">
+        Error submitting your form. Please ensure the file is a PDF under 1MB.
+    </div>
+    <form th:action="@{/post}" th:object="${experience}" method="post" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg p-8 space-y-6">
+        <input type="text" th:field="*{studentName}" placeholder="Your Name" required class="w-full border border-gray-300 rounded px-4 py-2">
+        <input type="email" th:field="*{email}" placeholder="Your Email" required class="w-full border border-gray-300 rounded px-4 py-2">
+        <select th:field="*{placementType}" class="w-full border border-gray-300 rounded px-4 py-2 text-gray-600">
+            <option value="Placement">Placement</option>
+            <option value="Intern">Intern</option>
+        </select>
+        <input type="number" th:field="*{yearOfPassing}" placeholder="Year of Passing Out" required class="w-full border border-gray-300 rounded px-4 py-2">
+        <input type="text" th:field="*{companyName}" placeholder="Company" required class="w-full border border-gray-300 rounded px-4 py-2">
+        <input type="url" th:field="*{linkedinUrl}" placeholder="LinkedIn URL (Optional)" class="w-full border border-gray-300 rounded px-4 py-2">
+        <div class="border border-gray-300 rounded p-2">
+            <input type="file" name="pdfFile" accept="application/pdf" required class="w-full text-gray-500">
+        </div>
+        <div class="text-center mt-6">
+            <button type="submit" class="bg-teal-500 text-white font-bold py-3 px-8 rounded-full">Submit</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

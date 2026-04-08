@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCEK Placement Portal</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: { 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+<nav class="bg-white shadow-md py-2 sticky top-0 z-50" th:fragment="navbar">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+
+        <a href="/" class="transition-opacity hover:opacity-80">
+            <img th:src="@{/images/gcek-logo.png}"
+                 alt="Government College Of Engineering, Karad"
+                 class="h-10 md:h-16 w-auto object-contain">
+        </a>
+
+        <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide text-gray-600">
+            <a href="/#about" class="hover:text-teal-500 transition-colors">About</a>
+            <a href="/preparation" class="hover:text-teal-500 transition-colors">Preparation</a>
+            <a href="/experiences" class="hover:text-teal-500 transition-colors">Experiences</a>
+            <a href="/post" class="hover:text-teal-500 transition-colors">Post</a>
+            <a href="/contact" class="hover:text-teal-500 transition-colors">Contact</a>
+        </div>
+
+        <div class="md:hidden flex items-center">
+            <button id="mobile-menu-button" class="text-gray-600 hover:text-teal-500 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 flex flex-col p-4 space-y-4 font-semibold text-gray-600">
+        <a href="/#about" class="hover:text-teal-500 transition-colors">About</a>
+        <a href="/preparation" class="hover:text-teal-500 transition-colors">Preparation</a>
+        <a href="/experiences" class="hover:text-teal-500 transition-colors">Experiences</a>
+        <a href="/post" class="hover:text-teal-500 transition-colors">Post</a>
+        <a href="/contact" class="hover:text-teal-500 transition-colors">Contact</a>
+    </div>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => menu.classList.add('hidden'));
+        });
+    </script>
+</nav>
+</body>
+</html>

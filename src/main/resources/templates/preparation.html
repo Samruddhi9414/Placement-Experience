@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparation - GCEK Placement Portal</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { teal: { 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488' } }
+                }
+            }
+        }
+    </script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* Custom checkbox styling for the task lists */
+        .prep-checkbox {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #14b8a6;
+            border-radius: 0.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .prep-checkbox::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            display: none;
+            font-size: 0.875rem;
+        }
+        .prep-checkbox:checked { background-color: #14b8a6; }
+        .prep-checkbox:checked::after { display: block; }
+
+        /* Hide scrollbar for the timeline wrapper on mobile, but keep it scrollable */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+<div th:replace="~{base :: navbar}"></div>
+
+<main class="container mx-auto px-6 py-12 max-w-6xl">
+
+    <div class="relative flex items-center justify-center mb-20 mt-16">
+
+        <button id="prevBtn" class="bg-teal-500 text-white rounded-full p-3 hover:bg-teal-600 transition shadow-lg z-20 disabled:opacity-50 disabled:cursor-not-allowed absolute left-0 md:-left-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+
+        <div class="w-full max-w-5xl overflow-x-auto hide-scrollbar px-12 relative pb-10 pt-16">
+            <div class="absolute top-1/2 left-10 right-10 h-1.5 bg-gray-200 -translate-y-1/2 z-0 rounded-full"></div>
+            <div id="progressLine" class="absolute top-1/2 left-10 h-1.5 bg-teal-500 -translate-y-1/2 z-0 transition-all duration-500 rounded-full" style="width: 0%;"></div>
+
+            <div class="flex justify-between items-center relative z-10 min-w-[1000px]">
+            </div>
+        </div>
+
+        <button id="nextBtn" class="bg-teal-500 text-white rounded-full p-3 hover:bg-teal-600 transition shadow-lg z-20 disabled:opacity-50 disabled:cursor-not-allowed absolute right-0 md:-right-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+    </div>
+
+    <div id="contentArea" class="bg-white rounded-xl shadow-xl p-8 md:p-14 min-h-[400px] border-t-4 border-teal-500" data-aos="fade-up">
+        <h1 id="sectionTitle" class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 font-serif text-teal-600">Resume building</h1>
+        <div id="sectionContent" class="space-y-5 text-gray-600">
+        </div>
+    </div>
+
+</main>
+
+<footer class="bg-gray-900 text-center py-6 text-gray-500 text-sm mt-12">
+    <p>&copy; 2026 GCEK Placement Cell. All Rights Reserved.</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 800, once: true });
+
+    // --- DATA FOR THE TIMELINE ---
+    const steps = [
+        {
+            navLabel: "Build your resume",
+            title: "Resume building",
+            items: [
+                "Make sure you can answer any questions raised from your resume.",
+                "Things to include: Full name, Email ID, phone number.",
+                "Professional social sites link (optional) like LinkedIn, codechef, etc.",
+                "Education (reverse order).",
+                "Internship (if any).",
+                "Projects, Extra curricular activities, Skills (programming languages or technologies known).",
+                "Hobbies.",
+                "Resume should be free from mistakes.",
+                "Try not to exceed a page (max of 2 pages)."
+            ]
+        },
+        {
+            navLabel: "Practise coding",
+            title: "Practice Coding",
+            items: [
+                "Most of the time the key focus in a placement process is Data structures and Algorithms.",
+                "So practise as much as you can.",
+                "Prepare from GeeksforGeeks.",
+                "Practise in LeetCode."
+            ]
+        },
+        {
+            navLabel: "Brush up CS subjects",
+            title: "CS subjects",
+            items: [
+                "Database Management System.",
+                "Operating Systems.",
+                "Object Oriented Programming Concepts.",
+                "Computer Networks.",
+                "Computer Architecture, Digital principles (low priority).",
+                "Java,Python (depends on role).",
+                "Learn these concepts from any of your preferred sites."
+            ]
+        },
+        {
+            navLabel: "Learn Aptitude",
+            title: "Aptitude",
+            items: [
+                 "Practice aptitude questions daily for at least 30 minutes.",
+                 "Focus on Basic topics like percentages, profit & loss, time & work.",
+                 "Learn shortcuts and tricks to solve questions faster.",
+                 "Solve previous year placement questions.",
+                 "Take online mock tests regularly.",
+                 "Manage your time properly during tests.",
+                "For aptitude preparation www.indiabix.com."
+            ]
+        },
+        {
+            navLabel: "Prepare specifically",
+            title: "Company specific preparation",
+            items: [
+                "Know about the company you are attending.",
+                "Make sure you are aware of the role you are interviewed for.",
+                "Try questions asked previously in the company. Company wise coding questions are available in GeeksForGeeks, InterviewBit, Leetcode etc.",
+                "Have a look at the interview experiences of the company."
+            ]
+        },
+        {
+            navLabel: "Ready for interview",
+            title: "Face to Face Interview",
+            items: [
+                "Face to Face Interviews (Tech/Managerial):",
+                "Mostly you will get questions from the topics in your resume.",
+                "Questions about your projects and internship.",
+                "CS subjects mentioned before.",
+                "Coding questions.",
+                "Some logical and puzzle questions will also be asked to know about your thinking process.",
+                "HR Interviews:",
+                "90% of the process is done.",
+                "Communicate with confidence.",
+                "Extend the conversations. Be prepared and have unique answers for the same old HR questions.",
+                "Know about the company and Job Description because they might discuss them during HR interviews.",
+                "Others:",
+                "Be confident and honest while answering in the face-to-face interviews. Your confidence will be a X-factor in these interviews.",
+                "In case the interviewer asks, \"Any Questions for me?\", ask them some general questions about the company.",
+                "Follow dress code.",
+                "You must drive your interview."
+            ]
+        }
+    ];
+
+    let currentIndex = 0;
+    const dotsContainer = document.querySelector('.min-w-\\[1000px\\]');
+    const progressLine = document.getElementById('progressLine');
+    const titleEl = document.getElementById('sectionTitle');
+    const contentEl = document.getElementById('sectionContent');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // Initialize Timeline Dots
+    function initTimeline() {
+        steps.forEach((step, index) => {
+            const dotWrapper = document.createElement('div');
+            dotWrapper.className = 'flex flex-col items-center cursor-pointer group w-40 relative';
+            dotWrapper.onclick = () => goToStep(index);
+
+            // Text Label above the dot
+            const label = document.createElement('span');
+            label.className = `absolute -top-14 text-sm md:text-base text-center font-semibold transition-all duration-300 w-[150%] left-1/2 -translate-x-1/2 ${index === 0 ? 'text-teal-600' : 'text-gray-400 group-hover:text-teal-500'}`;
+            label.id = `label-${index}`;
+            label.innerText = step.navLabel;
+
+            // The Circular Dot Indicator
+            const dot = document.createElement('div');
+            dot.id = `dot-${index}`;
+            dot.className = `w-6 h-6 rounded-full border-4 transition-all duration-300 bg-white relative z-10 ${index === 0 ? 'border-teal-500 shadow-[0_0_0_6px_rgba(20,184,166,0.2)]' : 'border-gray-300 group-hover:border-teal-400'}`;
+
+            dotWrapper.appendChild(label);
+            dotWrapper.appendChild(dot);
+            dotsContainer.appendChild(dotWrapper);
+        });
+        renderContent();
+    }
+
+    // Handle Navigation Clicks
+    function goToStep(index) {
+        currentIndex = index;
+
+        // Fade out animation
+        contentEl.style.opacity = '0';
+        titleEl.style.opacity = '0';
+
+        setTimeout(() => {
+            renderContent();
+            updateTimelineUI();
+
+            // Fade in animation
+            contentEl.style.opacity = '1';
+            titleEl.style.opacity = '1';
+            contentEl.style.transition = 'opacity 0.3s ease-in-out';
+            titleEl.style.transition = 'opacity 0.3s ease-in-out';
+        }, 150);
+    }
+
+    // Render Text Content into the Box
+    function renderContent() {
+        titleEl.innerText = steps[currentIndex].title;
+        contentEl.innerHTML = '';
+
+        steps[currentIndex].items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'flex items-start group';
+
+            // Custom Checkbox and Label
+            div.innerHTML = `
+                <input type="checkbox" class="prep-checkbox">
+                <label class="text-lg leading-relaxed cursor-pointer group-hover:text-teal-700 transition duration-200" onclick="this.previousElementSibling.click()">${item}</label>
+            `;
+            contentEl.appendChild(div);
+        });
+    }
+
+    // Update Dots, Colors, and Progress Line Width
+    function updateTimelineUI() {
+        // Calculate Line Progress
+        const percentage = (currentIndex / (steps.length - 1)) * 100;
+        progressLine.style.width = `calc(${percentage}% - 2px)`;
+
+        // Enable/Disable Arrows at the ends
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === steps.length - 1;
+
+        // Update dot and text styling
+        steps.forEach((_, idx) => {
+            const dot = document.getElementById(`dot-${idx}`);
+            const label = document.getElementById(`label-${idx}`);
+
+            if (idx <= currentIndex) {
+                // Active / Completed States (Teal)
+                dot.className = 'w-6 h-6 rounded-full border-4 bg-teal-500 border-teal-500 shadow-[0_0_0_6px_rgba(20,184,166,0.2)] transition-all duration-300 relative z-10';
+                label.className = 'absolute -top-14 text-sm md:text-base text-center font-bold text-teal-600 transition-all duration-300 w-[150%] left-1/2 -translate-x-1/2';
+            } else {
+                // Inactive States (Gray)
+                dot.className = 'w-6 h-6 rounded-full border-4 bg-white border-gray-300 transition-all duration-300 group-hover:border-teal-400 relative z-10';
+                label.className = 'absolute -top-14 text-sm md:text-base text-center font-semibold text-gray-400 transition-all duration-300 w-[150%] left-1/2 -translate-x-1/2 group-hover:text-teal-500';
+            }
+        });
+    }
+
+    // Arrow Button Event Listeners
+    prevBtn.addEventListener('click', () => { if(currentIndex > 0) goToStep(currentIndex - 1); });
+    nextBtn.addEventListener('click', () => { if(currentIndex < steps.length - 1) goToStep(currentIndex + 1); });
+
+    // Initialize on page load
+    initTimeline();
+</script>
+</body>
+</html>
