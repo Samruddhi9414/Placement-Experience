@@ -3,6 +3,6 @@ WORKDIR /app
 
 COPY target/placementPortal-0.0.1-SNAPSHOT.jar app.jar
 
-EXPOSE 20553
+EXPOSE 20564
 
 CMD ["java",".jar","app.jar"]
