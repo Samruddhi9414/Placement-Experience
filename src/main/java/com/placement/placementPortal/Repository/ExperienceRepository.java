@@ -10,4 +10,5 @@ public interface ExperienceRepository extends JpaRepository<Experience, Long> {
     List<Experience> findByCompanyNameContainingIgnoreCase(String companyName);
     List<Experience> findByPlacementTypeIgnoreCase(String type);
     List<Experience> findByCompanyNameContainingIgnoreCaseAndPlacementTypeIgnoreCase(String company, String type);
+
 }
